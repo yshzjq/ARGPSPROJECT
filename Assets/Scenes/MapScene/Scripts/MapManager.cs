@@ -32,12 +32,10 @@ public class MapManager : MonoBehaviour
 
     //double detailed_num = 1.0;
 
-    private void Start()
+    public void StartGetDirections()
     {
         StartCoroutine("GetDirections");
     }
-
-
 
     IEnumerator GetDirections()
     {
@@ -46,11 +44,17 @@ public class MapManager : MonoBehaviour
 
         // Debug.Log(originLongitude + "  " + originLatitude);
 
-        string originLatitude = "37.280270";
-        string originLongitude = "126.83260";
+        string originLatitude = "37.280756";
+        string originLongitude = "126.829251";
 
-        string destinationLatitude = "37.280766";  // 예: 로스앤젤레스
+        //string originLatitude = MYGPS.instance.latitude.ToString();
+        //string originLongitude = MYGPS.instance.longitude.ToString();
+
+        string destinationLatitude = "37.280766";
         string destinationLongitude = "126.829231";
+
+        //string destinationLatitude = PlayerPrefs.GetString("Latitude");
+        //string destinationLongitude = PlayerPrefs.GetString("Longitude");
 
         string origin = originLatitude + "," + originLongitude;
         string destination = destinationLatitude + "," + destinationLongitude;
@@ -96,7 +100,6 @@ public class MapManager : MonoBehaviour
 
     IEnumerator DisplayRouteOnMap(string polyline, string origin, string destination)
     {
-        Debug.Log("1");
         // Static Maps API URL 생성
         string baseURL = "https://maps.googleapis.com/maps/api/staticmap?";
         string path = "path=enc:" + polyline;  // Directions API에서 받은 polyline 경로를 사용

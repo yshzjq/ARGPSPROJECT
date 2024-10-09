@@ -22,7 +22,7 @@ public class TITLEUIManager : MonoBehaviour
     public GameObject signInObject;
     private Animator signInAnimator;
 
-    public TextMeshProUGUI signInIDText;
+    public TMP_InputField signInIDText;
     public TMP_InputField signInPWDText;
 
     //sign up
@@ -30,8 +30,11 @@ public class TITLEUIManager : MonoBehaviour
     private Animator signUpAnimator;
 
     public TMP_InputField signUpIDText;
+    public TextMeshProUGUI signUpIDTex1t;
     public TMP_InputField signUpPWDText;
+    public TextMeshProUGUI signUpPWDText1;
     public TMP_InputField signUpPWDConFirmText;
+    public TextMeshProUGUI signUpPWDConFirmText1;
 
 
     // notices
@@ -91,7 +94,7 @@ public class TITLEUIManager : MonoBehaviour
     // SignIn 버튼 누를시 올바른 입력인지 확인하고 FireBase 체크를 하는 함수
     public void CheckSignInTexts()
     {
-        string id = signInIDText.text;
+        string id = signInIDText.text.Trim();
         string pwd = signInPWDText.text.Trim();
 
         if (id == string.Empty || pwd == string.Empty)
@@ -175,7 +178,11 @@ public class TITLEUIManager : MonoBehaviour
                     signUpPWDText.text = "";
                     signUpPWDConFirmText.text = "";
 
-                    PlayerInfo playerInfo = new PlayerInfo(id,pwd);
+                    signUpIDTex1t.text = "";
+                    signUpPWDText1.text = "";
+                    signUpPWDConFirmText1.text = "";
+
+                    PlayerInfo playerInfo = new PlayerInfo(id.ToString().Trim(),pwd.ToString().Trim());
                     string json = JsonUtility.ToJson(playerInfo);
                     reference.Child("users").Child(id).SetRawJsonValueAsync(json);
 
@@ -199,6 +206,14 @@ public class TITLEUIManager : MonoBehaviour
     }
     public void SignUpDisAppear()
     {
+        signUpIDText.text = "";
+        signUpPWDText.text = "";
+        signUpPWDConFirmText.text = "";
+
+        signUpIDTex1t.text = "";
+        signUpPWDText1.text = "";
+        signUpPWDConFirmText1.text = "";
+
         signUpAnimator.SetTrigger("windowOut");
     }
     // NoticeMessage 함수들

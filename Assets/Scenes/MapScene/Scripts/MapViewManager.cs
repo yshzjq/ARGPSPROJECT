@@ -13,52 +13,86 @@ public class MapViewManager : MonoBehaviour
     private float destinationLatitude = 37.5805f; // 목적지 위도
     private float destinationLongitude = 126.995f; // 목적지 경도
 
-    private Texture2D[] textures;
-    public int textureIdx = 2;
-    private int MaxIdx = 5;
+    private Texture2D[][] textures;
+    public int textureIdx = 3;
+    public int posIdx = 0;
+    private int MaxIdx = 7;
+    //private int MaxPosIdx = 2;
+
+    public GameObject LoadingObject;
+
+    
 
     void Start()
     {
-        textures = new Texture2D[5];
+        userLatitude = PlayerPrefs.GetFloat("DestinationLatitude");
+        userLongitude = PlayerPrefs.GetFloat("DestinationLongitude");
+        destinationLatitude = PlayerPrefs.GetFloat("Latitude");
+        destinationLongitude = PlayerPrefs.GetFloat("Longitude");
+
+
+        textures = new Texture2D[2][];
+        textures[0] = new Texture2D[8];
+        textures[1] = new Texture2D[8];
         StartCoroutine("GetMapImage");
     }
 
     private IEnumerator GetMapImage()
     {
         // 구글 맵 Static API URL
-        string[] urls = new string[5];
+        string[][] urls = new string[2][];
+        urls[0] = new string[8];
+        urls[1] = new string[8];
         
-        int zoom = 6;
+        int zoom = 7;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 8; i++) 
         {
-            urls[i] = "https://maps.googleapis.com/maps/api/staticmap?"
-                   + "center=" + userLatitude + "," + userLongitude
-                   + "&zoom=" + zoom
-                   + "&size=1000x1000"
-                   + "&markers=color:blue%7C" + userLatitude + "," + userLongitude
-                   + "&markers=color:red%7C" + destinationLatitude + "," + destinationLongitude
-                   + "&key=" + UnityWebRequest.EscapeURL(apiKey);
-
-            using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(urls[i]))
+            for (int j = 0; j < 2; j++)
             {
-                yield return webRequest.SendWebRequest();
 
-                if (webRequest.result == UnityWebRequest.Result.Success)
+                if (j == 0)
                 {
-                    Texture2D texture = DownloadHandlerTexture.GetContent(webRequest);
-                    textures[i] = texture;
+                    urls[j][i] = "https://maps.googleapis.com/maps/api/staticmap?"
+                           + "center=" + destinationLatitude + "," + destinationLongitude
+                           + "&zoom=" + zoom
+                           + "&size=1000x1000"
+                           + "&markers=color:blue%7C" + userLatitude + "," + userLongitude
+                           + "&markers=color:red%7C" + destinationLatitude + "," + destinationLongitude
+                           + "&key=" + UnityWebRequest.EscapeURL(apiKey);
                 }
                 else
                 {
-                    Debug.LogError("Error fetching map: " + webRequest.error);
+                    urls[j][i] = "https://maps.googleapis.com/maps/api/staticmap?"
+                           + "center=" + userLatitude + "," + userLongitude
+                           + "&zoom=" + zoom
+                           + "&size=1000x1000"
+                           + "&markers=color:blue%7C" + userLatitude + "," + userLongitude
+                           + "&markers=color:red%7C" + destinationLatitude + "," + destinationLongitude
+                           + "&key=" + UnityWebRequest.EscapeURL(apiKey);
+                }
+
+                using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(urls[j][i]))
+                {
+                    yield return webRequest.SendWebRequest();
+
+                    if (webRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        Texture2D texture = DownloadHandlerTexture.GetContent(webRequest);
+                        textures[j][i] = texture;
+                    }
+                    else
+                    {
+                        Debug.LogError("Error fetching map: " + webRequest.error);
+                    }
                 }
             }
-
-            zoom += 3;
+            zoom += 2;
         }
 
-        mapImage.texture = textures[textureIdx];
+        mapImage.texture = textures[posIdx][textureIdx];
+
+        LoadingObject.SetActive(false);
         
     }
 
@@ -67,7 +101,7 @@ public class MapViewManager : MonoBehaviour
         if (textureIdx + 1 >= MaxIdx) return;
 
         textureIdx++;
-        mapImage.texture = textures[textureIdx];
+        mapImage.texture = textures[posIdx][textureIdx];
     }
 
     public void SubTractBtn()
@@ -75,7 +109,21 @@ public class MapViewManager : MonoBehaviour
         if (textureIdx - 1 < 0) return;
 
         textureIdx--;
-        mapImage.texture = textures[textureIdx];
+        mapImage.texture = textures[posIdx][textureIdx];
+    }
+
+    public void DesPosBtn()
+    {
+        posIdx = 0;
+
+        mapImage.texture = textures[posIdx][textureIdx];
+    }
+
+    public void MyPosBtn()
+    {
+        posIdx = 1;
+
+        mapImage.texture = textures[posIdx][textureIdx];
     }
 
     public void CancelAndExitBtn()

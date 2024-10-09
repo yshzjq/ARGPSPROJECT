@@ -53,9 +53,14 @@ public class ImageTrackingService : MonoBehaviour
                 isNoticeMessageAppear=true;
                 // 이미지를 인식하면 처리 (여기서 메시지 표시)
                 string[] scanInfo = trackedImage.referenceImage.name.Split(',');
-                MainManager.instance.AppearNoticeMessage(scanInfo[0] + "가 감지되었습니다.\n위치를 보시겠습니까?");
+
+
+                MainManager.instance.AppearNoticeMessage(scanInfo[0] + "\n위치를 보시겠습니까?");
+
+                PlayerPrefs.SetFloat("Latitude", float.Parse(scanInfo[1]));
+                PlayerPrefs.SetFloat("Longitude", float.Parse(scanInfo[2]));
+
             }
-            
         }
     }
 

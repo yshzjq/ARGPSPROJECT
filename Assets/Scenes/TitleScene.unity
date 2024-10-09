@@ -2389,8 +2389,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4439,8 +4439,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7082,8 +7082,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9101,12 +9101,15 @@ MonoBehaviour:
   titleUI: {fileID: 442320066}
   isLogInSuccess: 0
   signInObject: {fileID: 1150976505814778182}
-  signInIDText: {fileID: 547676119}
+  signInIDText: {fileID: 2020852270}
   signInPWDText: {fileID: 855545234}
   signUpObject: {fileID: 1812927379}
   signUpIDText: {fileID: 4323243792989549206}
+  signUpIDTex1t: {fileID: 4323299872525220532}
   signUpPWDText: {fileID: 107298281}
+  signUpPWDText1: {fileID: 901937155}
   signUpPWDConFirmText: {fileID: 1759042740924723616}
+  signUpPWDConFirmText1: {fileID: 1758986656550664578}
   noticeMessageObject: {fileID: 1443058919866117}
   noticeText: {fileID: 114621040332714015}
 --- !u!4 &1102771434
@@ -23946,8 +23949,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -25524,8 +25527,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
